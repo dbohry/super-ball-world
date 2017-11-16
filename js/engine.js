@@ -3,37 +3,36 @@ var BACKGROUND_COLOR = "#80daff",
     HEIGHT,
     WIDTH,
     MAX_JUMPS = 3,
-    FRAME = 0;
+    FRAME = 0,
+    CTX = {};
 
-var canvas,
-    ctx,
-    lastRun;
+main = {
+    canvas: {},
 
-function main() {
-    HEIGHT = window.innerHeight;
-    WIDTH = window.innerWidth;
+    start: function () {
+        HEIGHT = window.innerHeight;
+        WIDTH = window.innerWidth;
 
-    if (WIDTH >= 500) {
-        WIDTH = 600;
-        HEIGHT = 600;
+        if (WIDTH >= 500) {
+            WIDTH = 600;
+            HEIGHT = 600;
+        }
+
+        this.canvas = document.createElement("canvas");
+        this.canvas.width = WIDTH;
+        this.canvas.height = HEIGHT;
+        this.canvas.style.border = CANVAS_STYLE;
+
+        CTX = this.canvas.getContext("2d")
+
+        document.body.appendChild(this.canvas);
+        document.addEventListener("mousedown", this.Click);
+
+        loop();
+    },
+    Click: function (evt) {
+        player.Jump();
     }
-
-    canvas = document.createElement("canvas");
-    canvas.width = WIDTH;
-    canvas.height = HEIGHT;
-    canvas.style.border = CANVAS_STYLE;
-
-    ctx = canvas.getContext("2d")
-
-    document.body.appendChild(canvas);
-    document.addEventListener("mousedown", click);
-
-    loop();
-
-}
-
-function click(evt) {
-    player.Jump();
 }
 
 function loop() {
@@ -44,9 +43,14 @@ function loop() {
     window.requestAnimationFrame(loop);
 }
 
+function refresh() {
+    FRAME++;
+    player.Refresh();
+}
+
 function draw() {
-    ctx.fillStyle = BACKGROUND_COLOR;
-    ctx.fillRect(0, 0, WIDTH, HEIGHT);
+    CTX.fillStyle = BACKGROUND_COLOR;
+    CTX.fillRect(0, 0, WIDTH, HEIGHT);
 
     fps.Draw();
     ground.Draw();
@@ -54,10 +58,4 @@ function draw() {
     player.Draw();
 }
 
-function refresh() {
-    FRAME++;
-
-    player.Refresh();
-}
-
-main();
+main.start();

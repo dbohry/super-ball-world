@@ -16,8 +16,8 @@ block = {
     Draw: function () {
         for (var i = 0, size = this._blocks.length; i < size; i++) {
             var b = this._blocks[i];
-            ctx.fillStyle = b.color;
-            ctx.fillRect(b.x, ground.y - b.height, b.width, b.height);
+            CTX.fillStyle = b.color;
+            CTX.fillRect(b.x, ground.y - b.height, b.width, b.height);
         }
     }
 }
