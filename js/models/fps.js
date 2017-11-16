@@ -2,6 +2,7 @@ fps = {
     value: 0,
     font: "normal 16pt Arial",
     color: "#000",
+    
     calc: function () {
         if (!lastRun) {
             lastRun = new Date().getTime();
