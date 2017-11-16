@@ -28,34 +28,34 @@ main = {
         document.body.appendChild(this.canvas);
         document.addEventListener("mousedown", this.Click);
 
-        loop();
+        Loop();
     },
     Click: function (evt) {
-        player.Jump();
+        player.jump();
     }
 }
 
-function loop() {
-    refresh();
-    draw();
-    fps.Calc();
+function Loop() {
+    Refresh();
+    Draw();
+    fps.calc();
 
-    window.requestAnimationFrame(loop);
+    window.requestAnimationFrame(Loop);
 }
 
-function refresh() {
+function Refresh() {
     FRAME++;
-    player.Refresh();
+    player.refresh();
 }
 
-function draw() {
+function Draw() {
     CTX.fillStyle = BACKGROUND_COLOR;
     CTX.fillRect(0, 0, WIDTH, HEIGHT);
 
-    fps.Draw();
-    ground.Draw();
-    block.Draw();
-    player.Draw();
+    fps.draw();
+    ground.draw();
+    block.draw();
+    player.draw();
 }
 
 main.start();

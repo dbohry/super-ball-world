@@ -4,17 +4,17 @@ fps = {
     color: "#000",
     lastRun: {},
     
-    Calc: function () {
+    calc: function () {
         if (!this.lastRun) {
             lastRun = new Date().getTime();
-            window.requestAnimationFrame(loop);
+            window.requestAnimationFrame(Loop);
             return;
         }
         var delta = (new Date().getTime() - this.lastRun) / 1000;
         this.lastRun = new Date().getTime();
         this.value = Math.round(1 / delta);
     },
-    Draw: function () {
+    draw: function () {
         CTX.fillStyle = this.color;
         CTX.font = this.font;
         CTX.fillText(this.value + " fps", 10, 26);

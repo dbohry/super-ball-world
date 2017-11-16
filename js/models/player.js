@@ -9,7 +9,7 @@ player = {
     jumpforce: 23.6,
     jumps: 0,
 
-    Refresh: function () {
+    refresh: function () {
         this.velocity += this.gravity;
         this.y += this.velocity;
         if (this.y > ground.y - this.height) {
@@ -17,13 +17,13 @@ player = {
             this.jumps = 0;
         }
     },
-    Jump: function () {
+    jump: function () {
         if (this.jumps < MAX_JUMPS) {
             this.velocity = -this.jumpforce;
             this.jumps++;
         }
     },
-    Draw: function () {
+    draw: function () {
         CTX.fillStyle = this.color;
         CTX.fillRect(this.x, this.y, this.width, this.height);
     }
