@@ -3,7 +3,7 @@ fps = {
     font: "normal 16pt Arial",
     color: "#000",
     
-    calc: function () {
+    Calc: function () {
         if (!lastRun) {
             lastRun = new Date().getTime();
             window.requestAnimationFrame(loop);
@@ -13,7 +13,7 @@ fps = {
         lastRun = new Date().getTime();
         this.value = Math.round(1 / delta);
     },
-    draw: function () {
+    Draw: function () {
         ctx.fillStyle = this.color;
         ctx.font = this.font;
         ctx.fillText(this.value + " fps", 10, 26);

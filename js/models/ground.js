@@ -3,7 +3,7 @@ ground = {
     height: 50,
     color: "#ffdf70",
 
-    draw: function () {
+    Draw: function () {
         ctx.fillStyle = this.color;
         ctx.fillRect(0, this.y, WIDTH, this.height);
     }

@@ -3,7 +3,8 @@ var canvas,
     HEIGHT,
     WIDTH,
     frame = 0,
-    lastRun;
+    lastRun,
+    maxJumps = 3;
 
 function main() {
     HEIGHT = window.innerHeight;
@@ -29,13 +30,13 @@ function main() {
 }
 
 function click(evt) {
-    alert(evt);
+    block.Jump();
 }
 
 function loop() {
     refresh();
     draw();
-    fps.calc();
+    fps.Calc();
     
     window.requestAnimationFrame(loop);
 }
@@ -44,12 +45,15 @@ function draw() {
     ctx.fillStyle = "#50beff";
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
     
-    ground.draw();
-    fps.draw();
+    fps.Draw();
+    ground.Draw();
+    block.Draw();
 }
 
 function refresh() {
     frame++;
+
+    block.Refresh();
 }
 
 main();
