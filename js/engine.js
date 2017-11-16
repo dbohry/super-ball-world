@@ -1,10 +1,13 @@
-var canvas,
-    ctx,
+var BACKGROUND_COLOR = "#80daff",
+    CANVAS_STYLE = "1px solid #000",
     HEIGHT,
     WIDTH,
-    frame = 0,
-    lastRun,
-    maxJumps = 3;
+    MAX_JUMPS = 3,
+    FRAME = 0;
+
+var canvas,
+    ctx,
+    lastRun;
 
 function main() {
     HEIGHT = window.innerHeight;
@@ -18,7 +21,7 @@ function main() {
     canvas = document.createElement("canvas");
     canvas.width = WIDTH;
     canvas.height = HEIGHT;
-    canvas.style.border = "1px solid #000";
+    canvas.style.border = CANVAS_STYLE;
 
     ctx = canvas.getContext("2d")
 
@@ -30,30 +33,31 @@ function main() {
 }
 
 function click(evt) {
-    block.Jump();
+    player.Jump();
 }
 
 function loop() {
     refresh();
     draw();
     fps.Calc();
-    
+
     window.requestAnimationFrame(loop);
 }
 
 function draw() {
-    ctx.fillStyle = "#50beff";
+    ctx.fillStyle = BACKGROUND_COLOR;
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
-    
+
     fps.Draw();
     ground.Draw();
     block.Draw();
+    player.Draw();
 }
 
 function refresh() {
-    frame++;
+    FRAME++;
 
-    block.Refresh();
+    player.Refresh();
 }
 
 main();

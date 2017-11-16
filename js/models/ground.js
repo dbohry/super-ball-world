@@ -1,7 +1,7 @@
 ground = {
     y: 550,
     height: 50,
-    color: "#ffdf70",
+    color: "#e8da78",
 
     Draw: function () {
         ctx.fillStyle = this.color;
