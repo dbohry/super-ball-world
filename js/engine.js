@@ -4,7 +4,8 @@ var BACKGROUND_COLOR = "#80daff",
     WIDTH,
     MAX_JUMPS = 3,
     FRAME = 0,
-    CTX = {};
+    CTX = {},
+    VELOCITY = 6;
 
 main = {
     canvas: {},
@@ -46,6 +47,7 @@ function Loop() {
 function Refresh() {
     FRAME++;
     player.refresh();
+    block.refresh();
 }
 
 function Draw() {

@@ -1,6 +1,7 @@
 block = {
     _blocks: [],
     _colors: ["#ffbc1c", "#ff1c1c", "#ff85e1", "#52a7ff", " #78ff5d"],
+    insertionTime: 0,
 
     insert: function () {
         this._blocks.push({
@@ -9,9 +10,25 @@ block = {
             height: 30 + Math.floor(100 * Math.random()),
             color: this._colors[Math.floor(5 * Math.random())]
         });
+
+        this.insertionTime = 30 + Math.floor(40 * Math.random());
     },
     refresh: function () {
-        //todo
+        if (this.insertionTime == 0)
+            this.insert();
+        else
+            this.insertionTime--;
+
+        for (var i = 0, size = this._blocks.length; i < size; i++) {
+            var b = this._blocks[i];
+            b.x -= VELOCITY;
+
+            if (b.x <= -b.width) {
+                this._blocks.splice(i, 1);
+                size--;
+                i--;
+            }
+        }
     },
     draw: function () {
         for (var i = 0, size = this._blocks.length; i < size; i++) {
