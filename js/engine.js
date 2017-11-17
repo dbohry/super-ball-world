@@ -43,8 +43,10 @@ main = {
             player.jump();
         } else if (STATUS_NOW == STATUS.ready) {
             STATUS_NOW = STATUS.playing;
-        } else if (STATUS_NOW == STATUS.game_over) {
+        } else if (STATUS_NOW == STATUS.game_over && player.y >= HEIGHT) {
             STATUS_NOW = STATUS.ready;
+            player.velocity = 0;
+            player.y = 0;
         }
     }
 }
@@ -80,6 +82,9 @@ function Draw() {
     }
 
     if (STATUS_NOW == STATUS.game_over) {
+        var IMG_GAME_OVER = new Image();
+        IMG_GAME_OVER.src = "./img/game_over.png";
+
         CTX.fillStyle = "red";
         CTX.fillRect(WIDTH / 2 - 50, HEIGHT / 2 - 50, 100, 100);
     }

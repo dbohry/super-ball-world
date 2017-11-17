@@ -12,9 +12,10 @@ player = {
     refresh: function () {
         this.velocity += this.gravity;
         this.y += this.velocity;
-        if (this.y > ground.y - this.height) {
+        if (this.y > ground.y - this.height && STATUS_NOW != STATUS.game_over) {
             this.y = ground.y - this.height;
             this.jumps = 0;
+            this.velocity = 0;
         }
     },
     jump: function () {
