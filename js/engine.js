@@ -5,7 +5,13 @@ var BACKGROUND_COLOR = "#80daff",
     MAX_JUMPS = 3,
     FRAME = 0,
     CTX = {},
-    VELOCITY = 6;
+    VELOCITY = 6,
+    STATUS_NOW,
+    STATUS = {
+        ready: 0,
+        playing: 1,
+        game_over: 2
+    };
 
 main = {
     canvas: {},
@@ -29,10 +35,17 @@ main = {
         document.body.appendChild(this.canvas);
         document.addEventListener("mousedown", this.Click);
 
+        STATUS_NOW = STATUS.ready;
         Loop();
     },
     Click: function (evt) {
-        player.jump();
+        if (STATUS_NOW == STATUS.playing) {
+            player.jump();
+        } else if (STATUS_NOW == STATUS.ready) {
+            STATUS_NOW = STATUS.playing;
+        } else if (STATUS_NOW == STATUS.game_over) {
+            STATUS_NOW = STATUS.ready;
+        }
     }
 }
 
@@ -46,8 +59,13 @@ function Loop() {
 
 function Refresh() {
     FRAME++;
+
     player.refresh();
-    block.refresh();
+    if (STATUS_NOW == STATUS.playing) {
+        block.refresh();
+    } else if (STATUS_NOW == STATUS.game_over) {
+        block.clean();
+    }
 }
 
 function Draw() {
@@ -55,8 +73,22 @@ function Draw() {
     CTX.fillRect(0, 0, WIDTH, HEIGHT);
 
     fps.draw();
+
+    if (STATUS_NOW == STATUS.ready) {
+        CTX.fillStyle = "green";
+        CTX.fillRect(WIDTH / 2 - 50, HEIGHT / 2 - 50, 100, 100);
+    }
+
+    if (STATUS_NOW == STATUS.game_over) {
+        CTX.fillStyle = "red";
+        CTX.fillRect(WIDTH / 2 - 50, HEIGHT / 2 - 50, 100, 100);
+    }
+
+    if (STATUS_NOW == STATUS.playing) {
+        block.draw();
+    }
+    
     ground.draw();
-    block.draw();
     player.draw();
 }
 

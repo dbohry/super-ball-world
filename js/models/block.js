@@ -23,12 +23,17 @@ block = {
             var b = this._blocks[i];
             b.x -= VELOCITY;
 
-            if (b.x <= -b.width) {
+            if (player.x < b.x + b.width && player.x + player.width > b.x && player.y + player.height > ground.y - b.height) {
+                STATUS_NOW = STATUS.game_over;
+            } else if (b.x <= -b.width) {
                 this._blocks.splice(i, 1);
                 size--;
                 i--;
             }
         }
+    },
+    clean: function() {
+        this._blocks = [];
     },
     draw: function () {
         for (var i = 0, size = this._blocks.length; i < size; i++) {
