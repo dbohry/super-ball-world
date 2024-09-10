@@ -6,13 +6,13 @@ player = {
     color: "#ff9239",
     gravity: 1.6,
     velocity: 0,
-    jumpforce: 23.6,
+    jumpForce: 23.6,
     jumps: 0,
 
     refresh: function () {
         this.velocity += this.gravity;
         this.y += this.velocity;
-        if (this.y > ground.y - this.height && STATUS_NOW != STATUS.game_over) {
+        if (this.y > ground.y - this.height && STATUS_NOW !== STATUS.game_over) {
             this.y = ground.y - this.height;
             this.jumps = 0;
             this.velocity = 0;
@@ -20,7 +20,7 @@ player = {
     },
     jump: function () {
         if (this.jumps < MAX_JUMPS) {
-            this.velocity = -this.jumpforce;
+            this.velocity = -this.jumpForce;
             this.jumps++;
         }
     },

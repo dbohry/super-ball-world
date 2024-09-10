@@ -1,11 +1,11 @@
-var BACKGROUND_COLOR = "#80daff",
+let BACKGROUND_COLOR = "#80daff",
     CANVAS_STYLE = "1px solid #000",
     HEIGHT,
     WIDTH,
-    MAX_JUMPS = 3,
+    MAX_JUMPS = 30,
     FRAME = 0,
     CTX = {},
-    VELOCITY = 6,
+    VELOCITY = 4,
     STATUS_NOW,
     STATUS = {
         ready: 0,
@@ -39,11 +39,11 @@ main = {
         Loop();
     },
     Click: function (evt) {
-        if (STATUS_NOW == STATUS.playing) {
+        if (STATUS_NOW === STATUS.playing) {
             player.jump();
-        } else if (STATUS_NOW == STATUS.ready) {
+        } else if (STATUS_NOW === STATUS.ready) {
             STATUS_NOW = STATUS.playing;
-        } else if (STATUS_NOW == STATUS.game_over && player.y >= HEIGHT) {
+        } else if (STATUS_NOW === STATUS.game_over && player.y >= HEIGHT) {
             STATUS_NOW = STATUS.ready;
             player.velocity = 0;
             player.y = 0;
@@ -63,36 +63,43 @@ function Refresh() {
     FRAME++;
 
     player.refresh();
-    if (STATUS_NOW == STATUS.playing) {
+    if (STATUS_NOW === STATUS.playing) {
         block.refresh();
-    } else if (STATUS_NOW == STATUS.game_over) {
+    } else if (STATUS_NOW === STATUS.game_over) {
         block.clean();
     }
 }
+
+const IMG_GAME_OVER = new Image();
+IMG_GAME_OVER.src = "../img/game_over.png";
 
 function Draw() {
     CTX.fillStyle = BACKGROUND_COLOR;
     CTX.fillRect(0, 0, WIDTH, HEIGHT);
 
     fps.draw();
+    points.draw();
 
-    if (STATUS_NOW == STATUS.ready) {
+    if (STATUS_NOW === STATUS.ready) {
         CTX.fillStyle = "green";
         CTX.fillRect(WIDTH / 2 - 50, HEIGHT / 2 - 50, 100, 100);
+        points.restart();
     }
 
-    if (STATUS_NOW == STATUS.game_over) {
-        var IMG_GAME_OVER = new Image();
-        IMG_GAME_OVER.src = "./img/game_over.png";
-
-        CTX.fillStyle = "red";
-        CTX.fillRect(WIDTH / 2 - 50, HEIGHT / 2 - 50, 100, 100);
+    if (STATUS_NOW === STATUS.game_over) {
+        if (IMG_GAME_OVER.complete) {
+            CTX.drawImage(IMG_GAME_OVER, WIDTH / 2 - 50, HEIGHT / 2 - 50, 100, 100);
+        } else {
+            CTX.fillStyle = "red";
+            CTX.fillRect(WIDTH / 2 - 50, HEIGHT / 2 - 50, 100, 100);
+        }
     }
 
-    if (STATUS_NOW == STATUS.playing) {
+    if (STATUS_NOW === STATUS.playing) {
         block.draw();
+        points.calc();
     }
-    
+
     ground.draw();
     player.draw();
 }

@@ -14,7 +14,7 @@ block = {
         this.insertionTime = 30 + Math.floor(40 * Math.random());
     },
     refresh: function () {
-        if (this.insertionTime == 0)
+        if (this.insertionTime === 0)
             this.insert();
         else
             this.insertionTime--;

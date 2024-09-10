@@ -1,6 +1,6 @@
 fps = {
     value: 0,
-    font: "normal 16pt Arial",
+    font: "normal 14pt Arial",
     color: "#000",
     lastRun: {},
     
@@ -10,7 +10,7 @@ fps = {
             window.requestAnimationFrame(Loop);
             return;
         }
-        var delta = (new Date().getTime() - this.lastRun) / 1000;
+        const delta = (new Date().getTime() - this.lastRun) / 1000;
         this.lastRun = new Date().getTime();
         this.value = Math.round(1 / delta);
     },
