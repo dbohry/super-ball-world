@@ -1,9 +1,25 @@
-player = {
+function getRandomLlamaImage() {
+    const images = ["../img/llama1.png", "../img/llama2.png"];
+    const randomIndex = Math.floor(Math.random() * images.length);
+    return images[randomIndex];
+}
+
+const IMG_PLAYER = new Image();
+IMG_PLAYER.src = getRandomLlamaImage();
+
+IMG_PLAYER.onload = () => {
+    console.log('Player image loaded successfully');
+};
+
+IMG_PLAYER.onerror = () => {
+    console.error('Failed to load player image');
+};
+
+const player = {
     x: 50,
     y: 0,
     height: 50,
     width: 50,
-    color: "#ff9239",
     gravity: 0.8,
     velocity: 0,
     jumpForce: 18,
@@ -25,7 +41,11 @@ player = {
         }
     },
     draw: function () {
-        CTX.fillStyle = this.color;
-        CTX.fillRect(this.x, this.y, this.width, this.height);
+        if (IMG_PLAYER.complete) {
+            CTX.drawImage(IMG_PLAYER, this.x, this.y, this.width, this.height);
+        } else {
+            CTX.fillStyle = "#ff9239";
+            CTX.fillRect(this.x, this.y, this.width, this.height);
+        }
     }
-}
+};
