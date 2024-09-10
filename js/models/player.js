@@ -4,9 +4,9 @@ player = {
     height: 50,
     width: 50,
     color: "#ff9239",
-    gravity: 0.9,
+    gravity: 0.8,
     velocity: 0,
-    jumpForce: 22,
+    jumpForce: 18,
     jumps: 0,
 
     refresh: function () {

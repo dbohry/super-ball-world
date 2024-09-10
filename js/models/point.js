@@ -6,7 +6,7 @@ points = {
         this.total += 1;
 
         if (this.total % 1000 === 0) {
-            VELOCITY += 1;
+            VELOCITY += 0.5;
             this.bonus();
         }
 

@@ -33,20 +33,24 @@ main = {
         CTX = this.canvas.getContext("2d")
 
         document.body.appendChild(this.canvas);
-        document.addEventListener("mousedown", this.Click);
+
+        document.addEventListener("mousedown", this.handleInput.bind(this));
+        document.addEventListener("keydown", this.handleInput.bind(this));
 
         STATUS_NOW = STATUS.ready;
         Loop();
     },
-    Click: function (evt) {
-        if (STATUS_NOW === STATUS.playing) {
-            player.jump();
-        } else if (STATUS_NOW === STATUS.ready) {
-            STATUS_NOW = STATUS.playing;
-        } else if (STATUS_NOW === STATUS.game_over && player.y >= HEIGHT) {
-            STATUS_NOW = STATUS.ready;
-            player.velocity = 0;
-            player.y = 0;
+    handleInput: function (evt) {
+        if (evt.type === 'mousedown' || evt.code === 'Space' || evt.code === 'Enter') {
+            if (STATUS_NOW === STATUS.playing) {
+                player.jump();
+            } else if (STATUS_NOW === STATUS.ready) {
+                STATUS_NOW = STATUS.playing;
+            } else if (STATUS_NOW === STATUS.game_over && player.y >= HEIGHT) {
+                STATUS_NOW = STATUS.ready;
+                player.velocity = 0;
+                player.y = 0;
+            }
         }
     }
 }
@@ -73,6 +77,9 @@ function Refresh() {
 const IMG_GAME_OVER = new Image();
 IMG_GAME_OVER.src = "../img/game_over.png";
 
+const IMG_GAME_START = new Image();
+IMG_GAME_START.src = "../img/game_start.png";
+
 function Draw() {
     CTX.fillStyle = BACKGROUND_COLOR;
     CTX.fillRect(0, 0, WIDTH, HEIGHT);
@@ -81,8 +88,13 @@ function Draw() {
     points.draw();
 
     if (STATUS_NOW === STATUS.ready) {
-        CTX.fillStyle = "green";
-        CTX.fillRect(WIDTH / 2 - 50, HEIGHT / 2 - 50, 100, 100);
+        if (IMG_GAME_START.complete) {
+            CTX.drawImage(IMG_GAME_START, WIDTH / 2 - 50, HEIGHT / 2 - 50, 100, 100);
+        } else {
+            CTX.fillStyle = "green";
+            CTX.fillRect(WIDTH / 2 - 50, HEIGHT / 2 - 50, 100, 100);
+        }
+
         points.restart();
     }
 
