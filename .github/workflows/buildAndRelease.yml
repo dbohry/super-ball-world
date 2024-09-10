@@ -41,7 +41,7 @@ jobs:
             docker pull lhamacorp/llama-world:latest
             docker stop llama-world || true
             docker rm llama-world || true
-            docker run -d --name llama-world -p 46921:8080 lhamacorp/llama-world:latest
+            docker run -d --name llama-world -p 46921:80 lhamacorp/llama-world:latest
 
   cleanup:
     environment: neptune
