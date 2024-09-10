@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  dockerize:
+    name: Dockerize Application
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build the Docker image
+        run: |
+          docker build -t lhamacorp/llama-world:latest .
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push Docker image to Docker Hub
+        run: docker push lhamacorp/llama-world:latest
+
+  deploy:
+    name: Deploy to Server
+    needs: dockerize
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.NEPTUNE_SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker pull lhamacorp/llama-world:latest
+            docker stop llama-world || true
+            docker rm llama-world || true
+            docker run -d --name llama-world -p 46921:8080 lhamacorp/llama-world:latest
+
+  cleanup:
+    name: Clean up Docker Images on Server
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clean up Docker Images via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.NEPTUNE_SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker image prune -a -f

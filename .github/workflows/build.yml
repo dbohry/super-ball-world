@@ -1,0 +1,28 @@
+name: Validate Assets
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-assets:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Validate JS and Image Assets
+        run: |
+          if [ ! -d "js" ] || [ -z "$(ls -A js)" ]; then
+            echo "Error: js/ directory is missing or empty"
+            exit 1
+          else
+            echo "JS assets validated"
+          fi
+          
+          if [ ! -d "img" ] || [ -z "$(ls -A img)" ]; then
+            echo "Error: img/ directory is missing or empty"
+            exit 1
+          else
+            echo "Image assets validated"
+          fi
