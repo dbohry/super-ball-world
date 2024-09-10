@@ -17,6 +17,6 @@ fps = {
     draw: function () {
         CTX.fillStyle = this.color;
         CTX.font = this.font;
-        CTX.fillText(this.value + " fps", 10, 26);
+        CTX.fillText(this.value + " fps", 530, 26);
     }
 }

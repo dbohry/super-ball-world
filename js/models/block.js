@@ -1,6 +1,6 @@
 block = {
     _blocks: [],
-    _colors: ["#ffbc1c", "#ff1c1c", "#ff85e1", "#52a7ff", " #78ff5d"],
+    _colors: ["#ffbc1c", "#ff1c1c", "#ff85e1", "#52a7ff", "#78ff5d"],
     insertionTime: 0,
 
     insert: function () {
@@ -11,7 +11,7 @@ block = {
             color: this._colors[Math.floor(5 * Math.random())]
         });
 
-        this.insertionTime = 30 + Math.floor(40 * Math.random());
+        this.insertionTime = 100 + Math.floor(40 * Math.random());
     },
     refresh: function () {
         if (this.insertionTime === 0)
