@@ -27,7 +27,7 @@ jobs:
 
   deploy:
     environment: neptune
-    name: Deploy to Server
+    name: Deploy to Neptune
     needs: dockerize
     runs-on: ubuntu-latest
     steps:
